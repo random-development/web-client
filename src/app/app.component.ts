@@ -12,8 +12,8 @@ export class AppComponent {
   title = 'web-client';
 
   monitors: Observable<Monitor[]> = this._monitorService.list();
-  
-  constructor(private _monitorService: MonitorsService){
+
+  constructor(private _monitorService: MonitorsService) {
 
   }
 }
