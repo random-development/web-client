@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MonitorsService } from './monitors.service';
 import { Observable } from 'rxjs';
 import { Monitor } from './shared/monitor';
@@ -8,12 +8,15 @@ import { Monitor } from './shared/monitor';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'web-client';
 
   monitors: Observable<Monitor[]> = this._monitorService.monitors$;
 
   constructor(private _monitorService: MonitorsService) {
-    _monitorService.fetch();
+  }
+
+  ngOnInit(): void {
+    this._monitorService.fetch();
   }
 }
