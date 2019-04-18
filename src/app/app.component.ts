@@ -11,9 +11,9 @@ import { Monitor } from './shared/monitor';
 export class AppComponent {
   title = 'web-client';
 
-  monitors: Observable<Monitor[]> = this._monitorService.list();
+  monitors: Observable<Monitor[]> = this._monitorService.monitors$;
 
   constructor(private _monitorService: MonitorsService) {
-
+    _monitorService.fetch();
   }
 }
