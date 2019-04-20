@@ -3,9 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MonitorsService } from './monitors.service';
 import { HttpClientModule } from '@angular/common/http';
-
+import { MainpageModule } from './mainpage/mainpage.module';
 
 @NgModule({
   declarations: [
@@ -14,10 +13,8 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
-  ],
-  providers: [
-    MonitorsService
+    HttpClientModule,
+    MainpageModule
   ],
   bootstrap: [AppComponent]
 })
