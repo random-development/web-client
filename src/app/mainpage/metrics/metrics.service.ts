@@ -22,7 +22,6 @@ export class MetricsService {
     const url = environment.baseUrl + '/metrics?resources=monitor1:resource1,monitor1:resource2,monitor2,monitor3:resource1& ' +
     'from=12345678&to=12345890&resourceName=zeus&type=cpu';
     this._http.get<MetricValues[]>(url, HTTP_HEADERS).subscribe(data => {
-      console.dir(data);
       this._state$.next(data);
       this._loading$.next(false);
     });
