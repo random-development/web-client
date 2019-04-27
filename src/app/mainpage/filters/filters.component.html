@@ -19,14 +19,14 @@
   </div> 
   <div class="form-group">
     <label for="monitors">Monitors</label>
-    <select multiple id="monitors" class="form-control" formControlName="monitors">
-      <option *ngFor="let monitor of monitorService.monitors$ | async" [value]="monitor.name">{{ monitor.name }}</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="resources">Hosts</label>
-    <select multiple id="resources" class="form-control" formControlName="resources">
-      <option *ngFor="let resource of resources$ | async" [value]="resource">{{ resource }}</option>
-    </select>
+    <ng-select
+      [items]="monitors$ | async"
+      [multiple]="true"
+      [closeOnSelect]="false"
+      [searchable]="false"
+      bindLabel="name"
+      placeholder="Select monitors"
+      formControlName="monitors">
+    </ng-select>
   </div>
 </form>

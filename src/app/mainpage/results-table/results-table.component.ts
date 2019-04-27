@@ -9,8 +9,8 @@ import { MetricValues } from '../metrics/metric-values';
   styleUrls: ['./results-table.component.scss']
 })
 export class ResultsTableComponent implements OnInit {
-
   metrics$: Observable<MetricValues[]> = this._metricService.metrics$;
+  loading$: Observable<boolean> = this._metricService.loading$;
 
   constructor(private _metricService: MetricsService) {
   }

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MonitorsService } from '../monitors/monitors.service';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { MetricsService } from '../metrics/metrics.service';
 
 @Component({
   selector: 'app-filters',
@@ -11,7 +12,7 @@ import { Observable } from 'rxjs';
 })
 export class FiltersComponent implements OnInit {
 
-  resources$: Observable<string[]> = this.monitorService.monitors$.pipe(
+  resources$: Observable<string[]> = this._monitorService.monitors$.pipe(
     map(monitors => {
       return (monitors || [])
         .map(monitor => monitor.resources.map(r => r.name))
@@ -22,8 +23,12 @@ export class FiltersComponent implements OnInit {
     })
   );
 
-  loading$: Observable<boolean> = this.monitorService.monitors$.pipe(
+  loading$: Observable<boolean> = this._monitorService.monitors$.pipe(
     map(monitors => monitors === undefined)
+  );
+
+  monitors$: Observable<string[]> = this._monitorService.monitors$.pipe(
+    map(monitors => monitors.map(monitor => monitor.name))
   );
 
   formFilters = this._fb.group(
@@ -37,14 +42,15 @@ export class FiltersComponent implements OnInit {
   );
 
   constructor(private _fb: FormBuilder,
-              public monitorService: MonitorsService) { }
+              private _monitorService: MonitorsService,
+              private _metricService: MetricsService) { }
 
   ngOnInit() {
-    this.monitorService.fetch();
+    this._monitorService.fetch();
   }
 
   submit() {
-    alert('submit ' + this.formFilters.get('numberOfMeasures').value);
+    this._metricService.fetch();
   }
 
 }

@@ -1,10 +1,14 @@
 <p>
   resultstable works!
 </p>
-<p *ngIf="(metrics$ | async) === undefined">
-  Loading...
-</p>
-<p *ngFor="let metric of (metrics$ | async)">
-  {{ metric.name }}
-  {{ metric | json }}
-</p>
+<div *ngIf="(loading$ | async) === true" class="d-flex justify-content-center">
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+<div *ngIf="(loading$ | async) === false">
+  <p *ngFor="let metric of (metrics$ | async)">
+    {{ metric.name }}
+    {{ metric | json }}
+  </p>
+</div>
