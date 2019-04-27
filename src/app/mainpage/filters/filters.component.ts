@@ -13,14 +13,17 @@ export class FiltersComponent implements OnInit {
 
   resources$: Observable<string[]> = this.monitorService.monitors$.pipe(
     map(monitors => {
-      const resources = [];
-      if (monitors) {
-        monitors.forEach(monitor => {
-          resources.push(...monitor.resources.map(resource => resource.name));
-        });
-      }
-      return resources;
+      return (monitors || [])
+        .map(monitor => monitor.resources.map(r => r.name))
+        .reduce((resourcesAcc, resources) => {
+          resourcesAcc.push(...resources);
+          return resourcesAcc;
+        }, []);
     })
+  );
+
+  loading$: Observable<boolean> = this.monitorService.monitors$.pipe(
+    map(monitors => monitors === undefined)
   );
 
   formFilters = this._fb.group(
