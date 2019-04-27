@@ -36,8 +36,8 @@ export class FiltersComponent implements OnInit, OnDestroy {
       'datetimeFrom': [],
       'datetimeTo': [],
       'monitors': [],
-      'resources': [],
-      'measureTypes': [],
+      'resources': [{value: '', disabled: true}],
+      'measureTypes': [{value: '', disabled: true}],
     }
   );
 
@@ -79,14 +79,16 @@ export class FiltersComponent implements OnInit, OnDestroy {
       this._selectedMonitors$.next(values);
       resourcesSelect.setValue('');
       measureTypesSelect.setValue('');
+      values.length > 0 ? resourcesSelect.enable() : resourcesSelect.disable();
+      measureTypesSelect.disable();
     });
 
     resourcesSelect.valueChanges.pipe(
       takeUntil(this._destroyed$)
     ).subscribe(values => {
-      console.log('res select' + values);
       this._selectedResources$.next(values);
       measureTypesSelect.setValue('');
+      values.length > 0 ? measureTypesSelect.enable() : measureTypesSelect.disable();
     });
   }
 
