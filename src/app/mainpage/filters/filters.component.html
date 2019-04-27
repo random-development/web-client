@@ -10,12 +10,22 @@
     <input type="number" class="form-control" id="numberOfMeasures" formControlName="numberOfMeasures">
   </div>
   <div class="form-group">
-    <label for="datetimeFrom">Time From</label>
-    <input type="datetime-local" class="form-control" id="datetimeFrom" formControlName="datetimeFrom">
+    <label for="dateFrom">Date From</label>
+    <div class="input-group">
+      <input placeholder="yyyy-mm-dd" type="text" class="form-control" id="dateFrom" formControlName="dateFrom" ngbDatepicker #dateFrom="ngbDatepicker"> 
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary calendar" (click)="dateFrom.toggle()" type="button"></button>
+      </div>
+    </div>
   </div>
   <div class="form-group">
-    <label for="datetimeto">Time To</label>
-    <input type="datetime-local" class="form-control" id="datetimeTo" formControlName="datetimeTo">
+      <label for="dateTo">Date To</label>
+      <div class="input-group">
+        <input placeholder="yyyy-mm-dd" type="text" class="form-control" id="dateTo" formControlName="dateTo" ngbDatepicker #dateTo="ngbDatepicker"> 
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary calendar" (click)="dateTo.toggle()" type="button"></button>
+        </div>
+      </div>
   </div> 
   <div class="form-group">
     <label for="monitors">Monitors</label>

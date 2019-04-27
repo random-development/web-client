@@ -33,8 +33,8 @@ export class FiltersComponent implements OnInit, OnDestroy {
   formFilters: FormGroup = this._fb.group(
     {
       'numberOfMeasures': [100],
-      'datetimeFrom': [],
-      'datetimeTo': [],
+      'dateFrom': [],
+      'dateTo': [],
       'monitors': [],
       'resources': [{value: '', disabled: true}],
       'measureTypes': [{value: '', disabled: true}],

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FiltersComponent } from './filters.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -11,7 +12,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    NgSelectModule
+    NgSelectModule,
+    NgbModule
   ],
   exports: [
     FiltersComponent
