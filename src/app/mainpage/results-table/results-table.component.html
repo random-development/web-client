@@ -1,14 +1,25 @@
-<p>
-  resultstable works!
-</p>
 <div *ngIf="(loading$ | async) === true" class="d-flex justify-content-center">
   <div class="spinner-border" role="status">
     <span class="sr-only">Loading...</span>
   </div>
 </div>
 <div *ngIf="(loading$ | async) === false">
-  <p *ngFor="let metric of (metrics$ | async)">
-    {{ metric.name }}
-    {{ metric | json }}
-  </p>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Host name</th>
+        <th>Measure type</th>
+        <th>Value</th>
+        <th>Time</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let metric of (metrics$ | async)">
+          <td>{{ metric.name }}</td>
+          <td>{{ metric.type }}</td>
+          <td>{{ metric.lastValue }}</td>
+          <td>{{ metric.time }}</td>
+        </tr>
+    </tbody>
+  </table>
 </div>
