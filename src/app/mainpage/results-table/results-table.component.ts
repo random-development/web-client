@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MonitorsService } from '../monitors.service';
 import { Observable } from 'rxjs';
-import { Monitor } from '../entities/monitor';
+import { MetricsService } from '../metrics/metrics.service';
+import { MetricValues } from '../metrics/metric-values';
 
 @Component({
   selector: 'app-results-table',
@@ -10,13 +10,12 @@ import { Monitor } from '../entities/monitor';
 })
 export class ResultsTableComponent implements OnInit {
 
-  monitors$: Observable<Monitor[]> = this._monitorService.monitors$;
+  metrics$: Observable<MetricValues[]> = this._metricService.metrics$;
 
-  constructor(private _monitorService: MonitorsService) {
+  constructor(private _metricService: MetricsService) {
   }
 
   ngOnInit(): void {
-    this._monitorService.fetchMock();
+    this._metricService.fetch();
   }
-
 }

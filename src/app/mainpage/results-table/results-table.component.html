@@ -1,9 +1,10 @@
 <p>
   resultstable works!
 </p>
-<p *ngIf="(monitors$ | async) === undefined">
+<p *ngIf="(metrics$ | async) === undefined">
   Loading...
 </p>
-<p *ngFor="let monitor of (monitors$ | async)">
-  {{ monitor.name }}
+<p *ngFor="let metric of (metrics$ | async)">
+  {{ metric.name }}
+  {{ metric | json }}
 </p>

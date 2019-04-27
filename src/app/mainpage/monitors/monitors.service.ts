@@ -1,19 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Monitor } from './entities/monitor';
-import { environment } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Monitor } from './monitor';
+import { environment } from '../../../environments/environment';
 import { BehaviorSubject, timer } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { HTTP_HEADERS } from 'src/app/http-helpers';
 
 @Injectable()
 export class MonitorsService {
 
   private _state$ = new BehaviorSubject<Monitor[]>(undefined);
-  private readonly _httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json'
-    })
-  };
 
   monitors$ = this._state$.asObservable();
 
@@ -21,7 +17,8 @@ export class MonitorsService {
 
   public fetch(): void {
     const url = environment.baseUrl + '/monitors';
-    this._http.get<Monitor[]>(url, this._httpOptions).subscribe(data => {
+    this._http.get<Monitor[]>(url, HTTP_HEADERS).subscribe(data => {
+      console.dir(data);
       this._state$.next(data);
     });
   }
@@ -31,14 +28,7 @@ export class MonitorsService {
       take(1)
     );
     t.subscribe(d => {
-      this._state$.next([
-        {
-          name: 'mock monitor #1'
-        },
-        {
-          name: 'mock monitor #2'
-        }
-      ]);
+      this._state$.next([]);
     });
   }
 }

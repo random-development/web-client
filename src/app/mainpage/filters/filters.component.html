@@ -1,3 +1,27 @@
-<p>
-  filters works!
-</p>
+<form [formGroup]="formFilters" (ngSubmit)="submit()">
+  <button class="btn btn-primary">Refresh</button>
+  <div class="form-group">
+    <label for="numberOfMeasures">Number of measures</label>
+    <input type="number" class="form-control" id="numberOfMeasures" formControlName="numberOfMeasures">
+  </div>
+  <div class="form-group">
+    <label for="datetimeFrom">Time From</label>
+    <input type="datetime-local" class="form-control" id="datetimeFrom" formControlName="datetimeFrom">
+  </div>
+  <div class="form-group">
+    <label for="datetimeto">Time To</label>
+    <input type="datetime-local" class="form-control" id="datetimeTo" formControlName="datetimeTo">
+  </div> 
+  <div class="form-group">
+    <label for="monitors">Monitors</label>
+    <select multiple id="monitors" class="form-control" formControlName="monitors">
+      <option *ngFor="let monitor of monitorService.monitors$ | async" [value]="monitor.name">{{ monitor.name }}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="resources">Hosts</label>
+    <select multiple id="resources" class="form-control" formControlName="resources">
+      <option *ngFor="let resource of resources$ | async" [value]="resource">{{ resource }}</option>
+    </select>
+  </div>
+</form>
