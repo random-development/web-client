@@ -18,6 +18,14 @@ export class FiltersComponent implements OnInit, OnDestroy {
   private _selectedMonitors$ = new BehaviorSubject([]);
   private _selectedResources$ = new BehaviorSubject([]);
 
+  private _availableResources$: Observable<Resource[]> = combineLatest(
+    this._monitorService.monitors$,
+    this._selectedMonitors$
+  ).pipe(
+    map(([monitors, selectedMonitors]) => monitors.filter(monitor => selectedMonitors.includes(monitor.name))),
+    map(this._mapToResource)
+  );
+
   loading$: Observable<boolean> = this._monitorService.monitors$.pipe(
     map(monitors => monitors === undefined)
   );
@@ -35,14 +43,6 @@ export class FiltersComponent implements OnInit, OnDestroy {
 
   monitors$ = this._monitorService.monitors$.pipe(
     map(monitors => monitors.map(monitor => monitor.name))
-  );
-
-  private _availableResources$: Observable<Resource[]> = combineLatest(
-    this._monitorService.monitors$,
-    this._selectedMonitors$
-  ).pipe(
-    map(([monitors, selectedMonitors]) => monitors.filter(monitor => selectedMonitors.includes(monitor.name))),
-    map(this._mapToResource)
   );
 
   availableResourcesNames$: Observable<string[]> = this._availableResources$.pipe(
