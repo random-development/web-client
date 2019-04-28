@@ -4,5 +4,5 @@ export interface MetricValues {
     lastValue: number;
     time: number;
     timeData: number[];
-    valueDate: number[];
+    valueData: number[];
 }
