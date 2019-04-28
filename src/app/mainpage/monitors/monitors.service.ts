@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Monitor } from './monitor';
 import { environment } from '../../../environments/environment';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { HTTP_HEADERS } from 'src/app/http-helpers';
 import { map } from 'rxjs/operators';
 
@@ -11,9 +11,9 @@ export class MonitorsService {
 
   private _state$ = new BehaviorSubject<Monitor[]>(undefined);
 
-  monitors$ = this._state$.asObservable();
+  monitors$: Observable<Monitor[]> = this._state$.asObservable();
 
-  loading$ = this._state$.pipe(
+  loading$: Observable<boolean> = this._state$.pipe(
     map(monitors => monitors === undefined)
   );
 

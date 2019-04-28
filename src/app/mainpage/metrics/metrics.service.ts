@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { MetricValues } from './metric-values';
 import { HTTP_HEADERS } from 'src/app/http-helpers';
@@ -11,10 +11,10 @@ import { MetricFilters } from './metric-filters';
 })
 export class MetricsService {
   private _state$ = new BehaviorSubject<MetricValues[]>(undefined);
-  private _loading$ = new BehaviorSubject(undefined);
+  private _loading$ = new BehaviorSubject<boolean>(undefined);
 
-  metrics$ = this._state$.asObservable();
-  loading$ = this._loading$.asObservable();
+  metrics$: Observable<MetricValues[]> = this._state$.asObservable();
+  loading$: Observable<boolean> = this._loading$.asObservable();
 
   constructor(private _http: HttpClient) { }
 
