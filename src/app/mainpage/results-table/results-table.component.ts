@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MetricsService } from '../metrics/metrics.service';
 import { MetricValues } from '../metrics/metric-values';
 
 @Component({
@@ -8,14 +7,11 @@ import { MetricValues } from '../metrics/metric-values';
   templateUrl: './results-table.component.html',
   styleUrls: ['./results-table.component.scss']
 })
-export class ResultsTableComponent implements OnInit {
-  metrics$: Observable<MetricValues[]> = this._metricService.metrics$;
-  loading$: Observable<boolean> = this._metricService.loading$;
+export class ResultsTableComponent {
 
-  constructor(private _metricService: MetricsService) {
-  }
+  @Input()
+  metrics$: Observable<MetricValues[]>;
 
-  ngOnInit(): void {
-    this._metricService.fetch();
+  constructor() {
   }
 }

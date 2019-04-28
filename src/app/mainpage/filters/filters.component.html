@@ -1,9 +1,4 @@
-<div *ngIf="(loading$ | async) === true" class="d-flex justify-content-center">
-  <div class="spinner-border" role="status">
-    <span class="sr-only">Loading...</span>
-  </div>
-</div>
-<form  *ngIf="(loading$ | async) === false" [formGroup]="formFilters" (ngSubmit)="submit()">
+<form [formGroup]="formFilters" (ngSubmit)="submit()">
   <button class="btn btn-primary">Refresh</button>
   <div class="form-group">
     <label for="numberOfMeasures">Number of measures</label>
@@ -30,7 +25,7 @@
   <div class="form-group">
     <label for="monitors">Monitors</label>
     <ng-select
-      [items]="monitors$ | async"
+      [items]="monitorsNames$ | async"
       [multiple]="true"
       [closeOnSelect]="false"
       [searchable]="false"
