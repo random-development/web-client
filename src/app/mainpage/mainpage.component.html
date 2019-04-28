@@ -6,12 +6,12 @@
   </div>
   <div class="row">
     <div class="col-md-3">
-      <div *ngIf="(loadingMonitors$ | async) === true" class="d-flex justify-content-center">
+      <div *ngIf="(monitorsService.loading$ | async) === true" class="d-flex justify-content-center">
         <div class="spinner-border" role="status">
           <span class="sr-only">Loading...</span>
         </div>
       </div>
-      <div *ngIf="(loadingMonitors$ | async) === false">
+      <div *ngIf="(monitorsService.loading$ | async) === false">
         <app-filters 
           [monitors$]="monitorsService.monitors$"
           (filterChange)="submit($event)"
@@ -19,12 +19,12 @@
       </div>
     </div>
     <div class="col-md-9">
-      <div *ngIf="(loadingMetrics$ | async) === true" class="d-flex justify-content-center">
+      <div *ngIf="(metricService.loading$ | async) === true" class="d-flex justify-content-center">
         <div class="spinner-border" role="status">
           <span class="sr-only">Loading...</span>
         </div>
       </div>
-      <div *ngIf="(loadingMetrics$ | async) === false">
+      <div *ngIf="(metricService.loading$ | async) === false">
         <app-results-table [metrics$]="metricService.metrics$"></app-results-table>
       </div>
     </div>
