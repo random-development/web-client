@@ -13,7 +13,7 @@
       </div>
       <div *ngIf="(monitorsService.loading$ | async) === false">
         <app-filters 
-          [monitors$]="monitorsService.monitors$"
+          [monitors]="monitorsService.monitors$ | async"
           (filterChange)="submit($event)"
           ></app-filters>
       </div>
@@ -25,7 +25,7 @@
         </div>
       </div>
       <div *ngIf="(metricService.loading$ | async) === false">
-        <app-results-table [metrics$]="metricService.metrics$"></app-results-table>
+        <app-results-table [metrics]="metricService.metrics$ | async"></app-results-table>
       </div>
     </div>
   </div>

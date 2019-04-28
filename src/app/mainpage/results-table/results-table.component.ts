@@ -10,7 +10,7 @@ import { MetricValues } from '../metrics/metric-values';
 export class ResultsTableComponent {
 
   @Input()
-  metrics$: Observable<MetricValues[]>;
+  metrics: MetricValues[];
 
   constructor() {
   }

@@ -22,7 +22,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
   private _selectedResources$ = new BehaviorSubject([]);
 
   @Input()
-  monitors$: Observable<Monitor[]>;
+  monitors: Monitor[];
 
   @Output()
   filterChange: EventEmitter<FiltersChange> = new EventEmitter();
@@ -65,11 +65,8 @@ export class FiltersComponent implements OnInit, OnDestroy {
       values.length > 0 ? measureTypesSelect.enable() : measureTypesSelect.disable();
     });
 
-    this.availableResources$ = combineLatest(
-      this.monitors$,
-      this._selectedMonitors$
-    ).pipe(
-      map(([monitors, selectedMonitors]) => monitors.filter(monitor => selectedMonitors.includes(monitor.name))),
+    this.availableResources$ = this._selectedMonitors$.pipe(
+      map(selectedMonitors => this.monitors.filter(monitor => selectedMonitors.includes(monitor.name))),
       map(this.mapToResource)
     );
 
