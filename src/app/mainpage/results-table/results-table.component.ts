@@ -32,7 +32,7 @@ export class ResultsTableComponent {
   open(content, metric) {
     this.modalContent = metric;
     metric.timeData.forEach(element => {
-      this.timestampsConverted.push(new Date(element*1000).toLocaleTimeString(
+      this.timestampsConverted.push(new Date(element * 1000).toLocaleTimeString(
         [], 
         {
           year: '2-digit',
