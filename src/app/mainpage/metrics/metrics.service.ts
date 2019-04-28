@@ -6,9 +6,7 @@ import { MetricValues } from './metric-values';
 import { HTTP_HEADERS } from 'src/app/http-helpers';
 import { MetricFilters } from './metric-filters';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class MetricsService {
   private _state$ = new BehaviorSubject<MetricValues[]>(undefined);
   private _loading$ = new BehaviorSubject<boolean>(undefined);
