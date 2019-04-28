@@ -22,7 +22,7 @@ export class MetricsService {
     this._loading$.next(true);
     const httpParams = this.buildUrlParams(filters);
     const url = environment.baseUrl + '/metrics';
-    this._http.get<MetricValues[]>(url, { 
+    this._http.get<MetricValues[]>(url, {
       ...HTTP_HEADERS,
       params: httpParams })
       .subscribe(data => {
