@@ -12,7 +12,7 @@ import { filter } from 'rxjs/operators';
 export class ResultsTableComponent {
   closeResult: string;
   modalContent: undefined;
-  public chartType: string = 'line';
+  public chartType = 'line';
   @Input()
   metrics: MetricValues[];
 
@@ -32,7 +32,17 @@ export class ResultsTableComponent {
   open(content, metric) {
     this.modalContent = metric;
     metric.timeData.forEach(element => {
-      this.timestampsConverted.push(new Date(element*1000).toLocaleTimeString([], {year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute:'2-digit', second: '2-digit'}));
+      this.timestampsConverted.push(new Date(element*1000).toLocaleTimeString(
+        [], 
+        {
+          year: '2-digit',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        }
+      ));
     });
     this.barChartData = [
       {data: metric.valueData, label: 'Value'}
