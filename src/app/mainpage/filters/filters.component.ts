@@ -7,6 +7,10 @@ import { Resource } from '../monitors/Resource';
 import { Metric } from '../monitors/Metric';
 import { FiltersChange } from './filters-change';
 
+interface ResourceExtended extends Resource {
+  virtualId: string;
+}
+
 @Component({
   selector: 'app-filters',
   templateUrl: './filters.component.html',
@@ -16,7 +20,6 @@ export class FiltersComponent implements OnInit, OnDestroy {
   private _destroyed$ = new Subject();
   private _selectedMonitors$ = new BehaviorSubject([]);
   private _selectedResources$ = new BehaviorSubject([]);
-  private _availableResources$: Observable<Resource[]>;
 
   @Input()
   monitors$: Observable<Monitor[]>;
@@ -34,8 +37,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
       'measureTypes': [{value: null, disabled: true}],
     }
   );
-  monitorsNames$: Observable<string[]>;
-  availableResourcesNames$: Observable<string[]>;
+  availableResources$: Observable<ResourceExtended[]>;
   availableMeasureTypes$: Observable<string[]>;
 
   constructor(private _fb: FormBuilder) {}
@@ -63,7 +65,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
       values.length > 0 ? measureTypesSelect.enable() : measureTypesSelect.disable();
     });
 
-    this._availableResources$ = combineLatest(
+    this.availableResources$ = combineLatest(
       this.monitors$,
       this._selectedMonitors$
     ).pipe(
@@ -71,19 +73,11 @@ export class FiltersComponent implements OnInit, OnDestroy {
       map(this.mapToResource)
     );
 
-    this.monitorsNames$ = this.monitors$.pipe(
-      map(monitors => monitors.map(monitor => monitor.name))
-    );
-
-    this.availableResourcesNames$ = this._availableResources$.pipe(
-      map(resources => resources.map(resource => resource.name))
-    );
-
     this.availableMeasureTypes$ = combineLatest(
-      this._availableResources$,
+      this.availableResources$,
       this._selectedResources$
     ).pipe(
-      map(([resources, selectedResources]) => resources.filter(resource => selectedResources.includes(resource.name))),
+      map(([resources, selectedResources]) => resources.filter(resource => selectedResources.includes(resource.virtualId))),
       map(this.mapToMetric),
       map(metrics => metrics.map(metric => metric.name)),
       map(metricNames => {
@@ -112,9 +106,9 @@ export class FiltersComponent implements OnInit, OnDestroy {
     return date && new Date(`${date.year}-${date.month}-${date.day}`);
   }
 
-  private mapToResource(monitors: Monitor[]): Resource[] {
+  private mapToResource(monitors: Monitor[]): ResourceExtended[] {
     return (monitors || [])
-        .map(monitor => monitor.resources.map(r => r))
+        .map(monitor => monitor.resources.map(r => ({ ...r, virtualId: `${monitor.name}:${r.name}` })))
         .reduce((resourcesAcc, resources) => {
           resourcesAcc.push(...resources);
           return resourcesAcc;

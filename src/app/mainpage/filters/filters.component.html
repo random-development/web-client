@@ -25,11 +25,12 @@
   <div class="form-group">
     <label for="monitors">Monitors</label>
     <ng-select
-      [items]="monitorsNames$ | async"
+      [items]="monitors$ | async"
       [multiple]="true"
       [closeOnSelect]="false"
       [searchable]="false"
       bindLabel="name"
+      bindValue="name"
       placeholder="Select monitors"
       formControlName="monitors">
     </ng-select>
@@ -37,11 +38,12 @@
   <div class="form-group">
     <label for="resources">Hosts</label>
     <ng-select
-      [items]="availableResourcesNames$ | async"
+      [items]="availableResources$ | async"
       [multiple]="true"
       [closeOnSelect]="false"
       [searchable]="false"
       bindLabel="name"
+      bindValue="virtualId"
       placeholder="Select monitors then hosts"
       formControlName="resources">
     </ng-select>
@@ -53,7 +55,6 @@
       [multiple]="true"
       [closeOnSelect]="false"
       [searchable]="false"
-      bindLabel="name"
       placeholder="Select hosts then measure types"
       formControlName="measureTypes">
     </ng-select>
