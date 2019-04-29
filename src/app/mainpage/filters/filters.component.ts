@@ -48,8 +48,8 @@ export class FiltersComponent implements OnInit, OnDestroy {
       takeUntil(this._destroyed$)
     ).subscribe(values => {
       this._selectedMonitors$.next(values);
-      resourcesSelect.setValue('');
-      measureTypesSelect.setValue('');
+      resourcesSelect.setValue([]);
+      measureTypesSelect.setValue([]);
       values.length > 0 ? resourcesSelect.enable() : resourcesSelect.disable();
       measureTypesSelect.disable();
     });
@@ -58,7 +58,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
       takeUntil(this._destroyed$)
     ).subscribe(values => {
       this._selectedResources$.next(values);
-      measureTypesSelect.setValue('');
+      measureTypesSelect.setValue([]);
       values.length > 0 ? measureTypesSelect.enable() : measureTypesSelect.disable();
     });
 
