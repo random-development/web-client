@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  //baseUrl: 'http://hibron.usermd.net:5000/mock'
+  // baseUrl: 'http://hibron.usermd.net:5000/mock'
   baseUrl: 'http://hibron.usermd.net:5000/gateway'
 };
 
