@@ -58,7 +58,6 @@ export class FiltersComponent implements OnInit, OnDestroy {
       takeUntil(this._destroyed$)
     ).subscribe(values => {
       this._selectedResources$.next(values);
-      console.dir(values);
       measureTypesSelect.setValue('');
       values.length > 0 ? measureTypesSelect.enable() : measureTypesSelect.disable();
     });
