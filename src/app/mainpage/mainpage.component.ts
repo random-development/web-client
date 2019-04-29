@@ -21,12 +21,25 @@ export class MainpageComponent implements OnInit {
   }
 
   submit(filters: FiltersChange) {
+    const groupsByMonitor = {};
+    (filters.monitors || []).forEach(monitor => {
+      groupsByMonitor[monitor] = [];
+    });
+    (filters.resources || []).forEach(r => {
+      const splittedVirtualId = r.split(':');
+      const monitor = splittedVirtualId[0];
+      const resource = splittedVirtualId[1];
+      groupsByMonitor[monitor].push(resource);
+    });
+    const resources = Object.keys(groupsByMonitor).map(k => {
+      return groupsByMonitor[k].length === 0 ? k : (k + ':' + groupsByMonitor[k].join(':') );
+    });
     this.metricService.fetch({
       dateFrom: filters.dateFrom,
       dateTo: filters.dateTo,
       measureTypes: filters.measureTypes,
       numberOfMeasures: filters.numberOfMeasures,
-      resources: (filters.monitors || []).concat((filters.resources || []))
+      resources: resources
     });
   }
 }
