@@ -6,10 +6,7 @@ import { Monitor } from '../monitors/monitor';
 import { Resource } from '../monitors/Resource';
 import { Metric } from '../monitors/Metric';
 import { FiltersChange } from './filters-change';
-
-interface ResourceExtended extends Resource {
-  virtualId: string;
-}
+import { ResourceExtended } from './resource-extended';
 
 @Component({
   selector: 'app-filters',
@@ -18,8 +15,8 @@ interface ResourceExtended extends Resource {
 })
 export class FiltersComponent implements OnInit, OnDestroy {
   private _destroyed$ = new Subject();
-  private _selectedMonitors$ = new BehaviorSubject([]);
-  private _selectedResources$ = new BehaviorSubject([]);
+  private _selectedMonitors$ = new BehaviorSubject<string[]>([]);
+  private _selectedResources$ = new BehaviorSubject<ResourceExtended[]>([]);
 
   @Input()
   monitors: Monitor[];
@@ -61,6 +58,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
       takeUntil(this._destroyed$)
     ).subscribe(values => {
       this._selectedResources$.next(values);
+      console.dir(values);
       measureTypesSelect.setValue('');
       values.length > 0 ? measureTypesSelect.enable() : measureTypesSelect.disable();
     });
@@ -74,7 +72,10 @@ export class FiltersComponent implements OnInit, OnDestroy {
       this.availableResources$,
       this._selectedResources$
     ).pipe(
-      map(([resources, selectedResources]) => resources.filter(resource => selectedResources.includes(resource.virtualId))),
+      map(([resources, selectedResources]) => resources
+        .filter(resource => (selectedResources || [])
+                              .some(selectedResource => selectedResource.name === resource.name)
+                )),
       map(this.mapToMetric),
       map(metrics => metrics.map(metric => metric.name)),
       map(metricNames => {
@@ -105,7 +106,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
 
   private mapToResource(monitors: Monitor[]): ResourceExtended[] {
     return (monitors || [])
-        .map(monitor => monitor.resources.map(r => ({ ...r, virtualId: `${monitor.name}:${r.name}` })))
+    .map(monitor => monitor.resources.map(r => ({ ...r, monitorName: monitor.name })))
         .reduce((resourcesAcc, resources) => {
           resourcesAcc.push(...resources);
           return resourcesAcc;

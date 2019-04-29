@@ -25,13 +25,10 @@ export class MainpageComponent implements OnInit {
     (filters.monitors || []).forEach(monitor => {
       groupsByMonitor[monitor] = [];
     });
-    (filters.resources || []).forEach(r => {
-      const splittedVirtualId = r.split(':');
-      const monitor = splittedVirtualId[0];
-      const resource = splittedVirtualId[1];
-      groupsByMonitor[monitor].push(resource);
+    (filters.resources || []).forEach(resource => {
+      groupsByMonitor[resource.monitorName].push(resource.name);
     });
-    const resources = Object.keys(groupsByMonitor).map(k => {
+    const resourcesPaths = Object.keys(groupsByMonitor).map(k => {
       return groupsByMonitor[k].length === 0 ? k : (k + ':' + groupsByMonitor[k].join(':') );
     });
     this.metricService.fetch({
@@ -39,7 +36,7 @@ export class MainpageComponent implements OnInit {
       dateTo: filters.dateTo,
       measureTypes: filters.measureTypes,
       numberOfMeasures: filters.numberOfMeasures,
-      resources: resources
+      resourcesPaths: resourcesPaths
     });
   }
 }

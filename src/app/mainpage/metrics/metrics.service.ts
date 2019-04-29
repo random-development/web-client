@@ -30,15 +30,16 @@ export class MetricsService {
   }
 
   private buildUrlParams(filters: MetricFilters = null): HttpParams {
+    const convertToUnixTimestamp = (date: Date) => date.getTime() / 1000;
     let params = new HttpParams();
     if (filters == null) {
       return params;
     }
     if (filters.dateFrom) {
-      params = params.append('from', '' + (filters.dateFrom.getTime() / 1000));
+      params = params.append('from', '' + convertToUnixTimestamp(filters.dateFrom));
     }
     if (filters.dateTo) {
-      params = params.append('to', '' + (filters.dateTo.getTime() / 1000));
+      params = params.append('to', '' + convertToUnixTimestamp(filters.dateTo));
     }
     if (filters.measureTypes && filters.measureTypes.length) {
       params = params.append('type', filters.measureTypes.join(','));
@@ -46,8 +47,8 @@ export class MetricsService {
     if (filters.numberOfMeasures) {
       params = params.append('limit', '' + filters.numberOfMeasures);
     }
-    if (filters.resources && filters.resources.length) {
-      params = params.append('resources', filters.resources.join(','));
+    if (filters.resourcesPaths && filters.resourcesPaths.length) {
+      params = params.append('resources', filters.resourcesPaths.join(','));
     }
     return params;
   }
