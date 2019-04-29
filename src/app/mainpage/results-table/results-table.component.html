@@ -1,6 +1,6 @@
 <ng-template #content let-modal >
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Graph - {{ modalContent.name }}</h4>
+    <h4 class="modal-title" id="modal-basic-title">Graphs</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -23,7 +23,10 @@
   </div>
 </ng-template>
 
-
+<div align="right">
+  <button class="btn btn-primary" (click)="open(content, metrics)" type="button">Show on graph</button>
+  <p></p>
+</div>
 <table class="table">
   <thead>
     <tr>
@@ -31,7 +34,6 @@
       <th>Measure type</th>
       <th>Value</th>
       <th>Time</th>
-      <th>Graph</th>
     </tr>
   </thead>
   <tbody>
@@ -40,9 +42,6 @@
         <td>{{ metric.type }}</td>
         <td>{{ metric.lastValue }}</td>
         <td>{{ metric.time * 1000 | date:'yyyy-MM-dd HH:mm:ss Z' }}</td>
-        <td>
-          <button class="btn btn-outline-secondary" (click)="open(content, metric)" type="button">Show</button>
-        </td>
       </tr>
   </tbody>
 </table>

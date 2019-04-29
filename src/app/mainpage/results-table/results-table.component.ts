@@ -21,7 +21,8 @@ export class ResultsTableComponent {
 
   public barChartOptions = {
     scaleShowVerticalLines: false,
-    responsive: true
+    responsive: true,
+    fill: false
   };
   public barChartLabels = [];
   public barChartType = 'line';
@@ -29,25 +30,32 @@ export class ResultsTableComponent {
   public barChartData = [];
   public timestampsConverted = [];
 
-  open(content, metric) {
-    this.modalContent = metric;
-    metric.timeData.forEach(element => {
-      this.timestampsConverted.push(new Date(element * 1000).toLocaleTimeString(
-        [],
-        {
-          year: '2-digit',
-          month: '2-digit',
-          day: '2-digit',
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit'
-        }
-      ));
+  open(content, metrics) {
+    this.barChartLabels = [];
+    this.barChartData = [];
+    this.timestampsConverted = [];
+    this.modalContent = metrics;
+    if (metrics.length > 0) {
+      metrics[0].timeData.forEach(element => {
+        this.timestampsConverted.push(new Date(element * 1000).toLocaleTimeString(
+          [],
+          {
+            year: '2-digit',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+          }
+        ));
+      });
+      this.barChartLabels = this.timestampsConverted;
+    }
+    metrics.forEach(metric => {
+      this.barChartData.push(
+        {data: metric.valueData, label: metric.name, fill: 'false'}
+      );
     });
-    this.barChartData = [
-      {data: metric.valueData, label: 'Value'}
-    ];
-    this.barChartLabels = this.timestampsConverted;
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
