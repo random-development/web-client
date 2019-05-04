@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { map, takeUntil } from 'rxjs/operators';
 import { Observable, Subject, combineLatest, BehaviorSubject } from 'rxjs';
 import { Monitor } from '../monitors/monitor';
-import { Resource } from '../monitors/Resource';
-import { Metric } from '../monitors/Metric';
+import { Resource } from '../monitors/resource';
+import { Metric } from '../monitors/metric';
 import { FiltersChange } from './filters-change';
 import { ResourceExtended } from './resource-extended';
 
