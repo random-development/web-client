@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { map, takeUntil } from 'rxjs/operators';
-import { Observable, Subject, combineLatest, BehaviorSubject } from 'rxjs';
+import { Observable, Subject, combineLatest, BehaviorSubject, interval, Subscription } from 'rxjs';
 import { Monitor } from '../monitors/monitor';
 import { Resource } from '../monitors/resource';
 import { Metric } from '../monitors/metric';
@@ -17,6 +17,10 @@ export class FiltersComponent implements OnInit, OnDestroy {
   private _destroyed$ = new Subject();
   private _selectedMonitors$ = new BehaviorSubject<string[]>([]);
   private _selectedResources$ = new BehaviorSubject<ResourceExtended[]>([]);
+  private _autorefreshInterval: Observable<number> = interval(5000).pipe(
+    takeUntil(this._destroyed$)
+  );
+  private _intervalSubscription: Subscription;
 
   @Input()
   monitors: Monitor[];
@@ -32,10 +36,15 @@ export class FiltersComponent implements OnInit, OnDestroy {
       'monitors': [],
       'resources': [{value: null, disabled: true}],
       'measureTypes': [{value: null, disabled: true}],
+      'autorefresh': [false]
     }
   );
   availableResources$: Observable<ResourceExtended[]>;
   availableMeasureTypes$: Observable<string[]>;
+
+  get autoRefresh() {
+    return this.formFilters.get('autorefresh');
+  }
 
   constructor(private _fb: FormBuilder) {}
 
@@ -60,6 +69,20 @@ export class FiltersComponent implements OnInit, OnDestroy {
       this._selectedResources$.next(values);
       measureTypesSelect.setValue([]);
       values.length > 0 ? measureTypesSelect.enable() : measureTypesSelect.disable();
+    });
+
+    this.autoRefresh.valueChanges.pipe(
+      takeUntil(this._destroyed$)
+    ).subscribe(value => {
+      if (value) {
+        this._intervalSubscription = this._autorefreshInterval.pipe(
+          takeUntil(this._destroyed$)
+        ).subscribe(x => {
+          this.submit();
+        });
+      } else {
+        this._intervalSubscription.unsubscribe();
+      }
     });
 
     this.availableResources$ = this._selectedMonitors$.pipe(

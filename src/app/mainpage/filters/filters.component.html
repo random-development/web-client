@@ -1,5 +1,15 @@
 <form [formGroup]="formFilters" (ngSubmit)="submit()">
-  <button class="btn btn-primary">Refresh</button>
+  <div class="row">
+      <div class="col-md-6">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="autorefresh" formControlName="autorefresh">
+            <label for="autorefresh">Autorefresh</label>
+          </div>        
+      </div>
+      <div class="col-md-6">
+          <button [disabled]="autoRefresh.value === true" class="btn btn-primary float-right">Refresh</button>
+      </div>
+  </div>
   <div class="form-group">
     <label for="numberOfMeasures">Number of measures</label>
     <input type="number" class="form-control" id="numberOfMeasures" formControlName="numberOfMeasures">
