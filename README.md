@@ -4,6 +4,12 @@ Link to test env: `http://web-client-pz.azurewebsites.net`
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.3.
 
+## Docker running
+
+$ docker build -t web-client .
+$ docker run -p 3000:80 web-client
+And done, your dockerized app will be accessible at http://localhost:3000
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
