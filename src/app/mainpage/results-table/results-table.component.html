@@ -31,6 +31,7 @@
   <thead>
     <tr>
       <th>Host name</th>
+      <th>Monitor name</th>
       <th>Measure type</th>
       <th>Value</th>
       <th>Time</th>
@@ -38,6 +39,7 @@
   </thead>
   <tbody>
       <tr *ngFor="let metric of metrics">
+        <td>{{ metric.resourceName }}</td>
         <td>{{ metric.name }}</td>
         <td>{{ metric.type }}</td>
         <td>{{ metric.lastValue }}</td>
