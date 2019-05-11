@@ -128,7 +128,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
 
   private mapToResource(monitors: Monitor[]): ResourceExtended[] {
     return (monitors || [])
-    .map(monitor => monitor.resources.map(r => ({ ...r, monitorName: monitor.name })))
+    .map(monitor => monitor.resources.map(r => ({ ...r, monitorName: monitor.name, label: `${r.name} (${monitor.name})` })))
         .reduce((resourcesAcc, resources) => {
           resourcesAcc.push(...resources);
           return resourcesAcc;
