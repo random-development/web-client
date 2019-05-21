@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MetricValues } from '../metrics/metric-values';
+import { MetricValues } from '../metric-values/metric-values';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { filter } from 'rxjs/operators';
 

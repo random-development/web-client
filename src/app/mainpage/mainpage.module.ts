@@ -1,26 +1,43 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MainpageComponent } from './mainpage.component';
-import { MonitorsService } from './monitors/monitors.service';
-import { FiltersModule } from './filters/filters.module';
-import { ResultsTableModule } from './results-table/results-table.module';
-import { MetricsService } from './metrics/metrics.service';
+import { MetricModule } from './metric/metric.module';
+import { Route, RouterModule } from '@angular/router';
+import { ComplexModule } from './complex/complex.module';
+import { MetricComponent } from './metric/metric.component';
+import { ComplexComponent } from './complex/complex.component';
+
+const routes: Route[] = [
+  {
+      path: '',
+      component: MainpageComponent,
+      children: [
+        {
+          path: '',
+          pathMatch: 'full',
+          component: MetricComponent
+        },
+        {
+          path: 'complex',
+          component: ComplexComponent
+        }
+      ]
+  }
+];
 
 @NgModule({
   declarations: [
     MainpageComponent
   ],
-  providers: [
-    MonitorsService,
-    MetricsService
-  ],
   imports: [
     CommonModule,
-    FiltersModule,
-    ResultsTableModule
+    RouterModule.forChild(routes),
+    MetricModule,
+    ComplexModule
   ],
   exports: [
-    MainpageComponent
+    MainpageComponent,
+    RouterModule
   ]
 })
 export class MainpageModule { }
