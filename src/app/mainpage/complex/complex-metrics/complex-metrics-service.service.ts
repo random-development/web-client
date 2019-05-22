@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Metric } from '../monitors/metric';
+import { Metric } from '../../monitors/metric';
 import { HTTP_HEADERS } from 'src/app/http-helpers';
 
 @Injectable({

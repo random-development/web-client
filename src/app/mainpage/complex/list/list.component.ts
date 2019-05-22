@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { Metric } from '../../monitors/metric';
+import { MetricExtended } from '../metric-extended';
 
 @Component({
   selector: 'app-complex-list',
@@ -9,7 +10,7 @@ import { Metric } from '../../monitors/metric';
 export class ListComponent implements OnInit {
 
   @Input()
-  metrics: Metric[];
+  metrics: MetricExtended[];
 
   constructor() { }
 

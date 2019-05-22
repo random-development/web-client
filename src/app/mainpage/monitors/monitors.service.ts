@@ -24,7 +24,7 @@ export class MonitorsService {
     this._http.get<Monitor[]>(url, HTTP_HEADERS).subscribe(data => {
       this._state$.next(
         [...data,
-        {//add mock
+        {// add mock
           name: 'Mock',
           resources: [
             {

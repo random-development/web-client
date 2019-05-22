@@ -1,4 +1,24 @@
-<p>
-  list works!
-</p>
-{{ metrics | json }}
+<table class="table">
+    <thead>
+      <tr>
+        <th>Complex Metric</th>
+        <th>Monitor</th>
+        <th>Host</th>
+        <th>Interval</th>
+        <th>Period</th>
+        <th>Source metric</th>
+        <th>User</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let metric of metrics">
+          <td>{{ metric.name }}</td>
+          <td>{{ metric.monitorName }}</td>
+          <td>{{ metric.resourceName }}</td>
+          <td>{{ metric.interval }}</td>
+          <td>{{ metric.period }}</td>
+          <td>{{ metric.sourceMetric }}</td>
+          <td>{{ metric.userId }}</td>
+        </tr>
+    </tbody>
+  </table>
