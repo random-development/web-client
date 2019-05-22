@@ -9,6 +9,8 @@
     <div *ngIf="(monitorsService.loading$ | async) === false">
       <app-filters [monitors]="monitorsService.monitors$ | async" 
                   (filterChange)="submit($event)"></app-filters>
+      <button class="btn btn-primary" 
+              routerLink="/complex">Manage complex</button>
     </div>
   </div>
   <div class="col-md-9">

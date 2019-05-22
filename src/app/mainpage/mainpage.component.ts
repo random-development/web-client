@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MonitorsService } from './monitors/monitors.service';
+import { MetricsService } from './metric/metric-values/metrics.service';
 
 @Component({
   selector: 'app-mainpage',
@@ -6,8 +8,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./mainpage.component.scss']
 })
 export class MainpageComponent implements OnInit {
-  ngOnInit(): void {
 
+  constructor(private monitorsService: MonitorsService,
+              private metricService: MetricsService) {
+  }
+
+  ngOnInit() {
+    this.monitorsService.fetch();
+    this.metricService.fetch({
+      numberOfMeasures: 100
+    });
   }
 
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MonitorsService } from './monitors/monitors.service';
+import { MonitorsService } from '../monitors/monitors.service';
 import { MetricsService } from './metric-values/metrics.service';
 import { FiltersChange } from './filters/filters-change';
 
@@ -8,18 +8,10 @@ import { FiltersChange } from './filters/filters-change';
   templateUrl: './metric.component.html',
   styleUrls: ['./metric.component.scss']
 })
-export class MetricComponent implements OnInit {
-
+export class MetricComponent {
 
   constructor(public monitorsService: MonitorsService,
     public metricService: MetricsService) { }
-
-  ngOnInit() {
-    this.monitorsService.fetch();
-    this.metricService.fetch({
-      numberOfMeasures: 100
-    });
-  }
 
   submit(filters: FiltersChange) {
     const groupsByMonitor = {};

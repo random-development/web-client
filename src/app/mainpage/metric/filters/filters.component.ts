@@ -2,9 +2,9 @@ import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angu
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { map, takeUntil } from 'rxjs/operators';
 import { Observable, Subject, combineLatest, BehaviorSubject, interval, Subscription } from 'rxjs';
-import { Monitor } from '../monitors/monitor';
-import { Resource } from '../monitors/resource';
-import { Metric } from '../monitors/metric';
+import { Monitor } from '../../monitors/monitor';
+import { Resource } from '../../monitors/resource';
+import { Metric } from '../../monitors/metric';
 import { FiltersChange } from './filters-change';
 import { ResourceExtended } from './resource-extended';
 

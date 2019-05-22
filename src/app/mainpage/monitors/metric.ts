@@ -1,6 +1,6 @@
 export interface Metric {
   name: string;
-  type: 'normal' | 'complex';
+  type: 'NORMAL' | 'COMPLEX';
   userId?: string;
   sourceMetric?: string;
   period?: number;
