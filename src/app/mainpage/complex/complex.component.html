@@ -7,11 +7,12 @@
   </div>
   <ng-template #metrics>
     <div class="col-md-3">
-      <app-complex-manage></app-complex-manage>
+      <app-complex-manage
+        [metrics]="metrics$ | async"></app-complex-manage>
     </div>
     <div class="col-md-9">
       <app-complex-list
-        [metrics]="complexMetrics$ | async"></app-complex-list>
+        [metrics]="metricsComplex$ | async"></app-complex-list>
     </div>
   </ng-template>
 </div>

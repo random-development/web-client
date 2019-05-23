@@ -31,7 +31,16 @@ export class MonitorsService {
               name: 'rmock',
               metrics: [{ name: 'testm', type: 'COMPLEX', period: 1, interval: 1 }]
             }]
-        }]);
+        },
+        {// add mock
+          name: 'Mock2',
+          resources: [
+            {
+              name: 'rmock2',
+              metrics: [{ name: 'testm2', type: 'NORMAL', period: 2, interval: 2 }]
+            }]
+        }
+      ]);
     });
   }
 }

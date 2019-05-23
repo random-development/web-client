@@ -1,5 +1,65 @@
-<p>
-  manage works!
-</p>
-<button class="btn btn-primary" 
+<form [formGroup]="formManage" (ngSubmit)="submit()">
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input type="text" class="form-control" id="name" formControlName="name">
+    <label *ngIf="nameInput.hasError('required') && nameInput.touched" 
+           class="error">
+      This field is required
+    </label>
+  </div>
+  <div class="form-group">
+      <label for="monitor">Monitor:</label>
+      <ng-select [items]="monitors$ | async"
+                 placeholder="Select monitor then host"
+                 formControlName="monitor">
+      </ng-select>
+      <label *ngIf="monitorInput.hasError('required') && monitorInput.touched" 
+              class="error">
+        This field is required
+      </label>
+  </div>
+  <div class="form-group">
+      <label for="resource">Resource:</label>
+      <ng-select [items]="this.resources$ | async"
+                 placeholder="Select resource then metric"
+                 formControlName="resource">
+      </ng-select>
+      <label *ngIf="resourceInput.hasError('required') && resourceInput.touched" 
+             class="error">
+        This field is required
+      </label>
+  </div>
+  <div class="form-group">
+      <label for="metric">Metric:</label>
+      <ng-select [items]="this.metrics$ | async"
+                 placeholder="Select metric"
+                 formControlName="metric">
+      </ng-select>
+      <label *ngIf="metricInput.hasError('required') && metricInput.touched" 
+             class="error">
+        This field is required
+      </label>
+  </div>
+  <div class="form-group">
+    <label for="interval">Interval:</label>
+    <input type="number" min="1" class="form-control" id="interval" formControlName="interval">
+    <label *ngIf="intervalInput.hasError('required') && intervalInput.touched" 
+            class="error">
+      This field is required
+    </label>
+  </div>
+  <div class="form-group">
+    <label for="Period">Period:</label>
+    <input type="number" min="1" class="form-control" id="period" formControlName="period">
+    <label *ngIf="periodrInput.hasError('required') && periodrInput.touched" 
+            class="error">
+      This field is required
+    </label>
+  </div>
+  <div class="form-group">
+    <button class="btn btn-primary" 
+            [disabled]="formManage.invalid">Add</button>
+  </div>
+</form>
+<button class="btn btn-secondary" 
         routerLink="/">Back</button>

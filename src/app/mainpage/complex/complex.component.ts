@@ -11,7 +11,7 @@ import { MetricExtended } from './metric-extended';
 })
 export class ComplexComponent implements OnInit {
 
-  complexMetrics$: Observable<MetricExtended[]> = this._monitorsService.monitors$.pipe(
+  metrics$: Observable<MetricExtended[]> = this._monitorsService.monitors$.pipe(
     map(monitors => {
       const mapped: MetricExtended[] = [];
       monitors.forEach(monitor => {
@@ -25,8 +25,12 @@ export class ComplexComponent implements OnInit {
           });
         });
       });
-      return mapped.filter(m => m.type === 'COMPLEX');
+      return mapped;
     }),
+  );
+
+  metricsComplex$: Observable<MetricExtended[]> = this.metrics$.pipe(
+    map(m => m.filter(x => x.type === 'COMPLEX'))
   );
 
   loading$ = this._monitorsService.loading$;
