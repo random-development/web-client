@@ -31,6 +31,7 @@ export class ManageComponent implements OnInit, OnDestroy {
     })
   );
 
+// tslint:disable-next-line: deprecation
   resources$: Observable<string[]> = combineLatest(
     this._metricsExtended$,
     this._selectedMonitor$,
@@ -41,6 +42,7 @@ export class ManageComponent implements OnInit, OnDestroy {
     }
   );
 
+// tslint:disable-next-line: deprecation
   metrics$: Observable<string[]> = combineLatest(
     this._metricsExtended$,
     this._selectedMonitor$,
