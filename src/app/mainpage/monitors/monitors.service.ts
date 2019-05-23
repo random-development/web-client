@@ -10,17 +10,17 @@ import { map } from 'rxjs/operators';
 export class MonitorsService {
 
   private _state$ = new BehaviorSubject<Monitor[]>(undefined);
+  private _loading$ = new BehaviorSubject<boolean>(undefined);
 
   monitors$: Observable<Monitor[]> = this._state$.asObservable();
 
-  loading$: Observable<boolean> = this._state$.pipe(
-    map(monitors => monitors === undefined)
-  );
+  loading$ = this._loading$.asObservable();
 
   constructor(private _http: HttpClient) { }
 
   public fetch(): void {
     const url = environment.baseUrl + '/monitors';
+    this._loading$.next(true);
     this._http.get<Monitor[]>(url, HTTP_HEADERS).subscribe(data => {
       this._state$.next(
         [...data,
@@ -41,6 +41,7 @@ export class MonitorsService {
             }]
         }
       ]);
+      this._loading$.next(false);
     });
   }
 }

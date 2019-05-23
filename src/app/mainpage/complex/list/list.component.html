@@ -8,6 +8,7 @@
         <th>Period</th>
         <th>Source metric</th>
         <th>User</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
@@ -19,6 +20,12 @@
           <td>{{ metric.period }}</td>
           <td>{{ metric.sourceMetric }}</td>
           <td>{{ metric.userId }}</td>
+          <td>
+            <button class="btn btn-primary"
+                    (click)="remove(metric.monitorName, metric.resourceName, metric.name)">
+              Remove
+            </button>
+          </td>
         </tr>
     </tbody>
   </table>

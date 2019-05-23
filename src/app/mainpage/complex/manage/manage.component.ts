@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { MetricExtended } from '../metric-extended';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Subject, BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
+import { CreateMetric } from './create-metric';
 
 @Component({
   selector: 'app-complex-manage',
@@ -19,6 +20,9 @@ export class ManageComponent implements OnInit, OnDestroy {
   set metrics(m) {
     this._metricsExtended$.next(m);
   }
+
+  @Output()
+  create = new EventEmitter<CreateMetric>();
 
   monitors$: Observable<string[]> = this._metricsExtended$.pipe(
     map(metrics => {
@@ -119,8 +123,11 @@ export class ManageComponent implements OnInit, OnDestroy {
   }
 
   submit() {
+    if (this.formManage.invalid) {
+      return;
+    }
     const data = this.formManage.value;
-    console.dir(data);
+    this.create.emit(data);
   }
 
 }

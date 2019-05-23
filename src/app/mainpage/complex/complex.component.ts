@@ -3,6 +3,9 @@ import { MonitorsService } from '../monitors/monitors.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { MetricExtended } from './metric-extended';
+import { CreateMetric } from './manage/create-metric';
+import { WriteMetricsService } from './write-metrics/write-metrics.service';
+import { DeleteMetric } from './list/delete-metric';
 
 @Component({
   selector: 'app-complex',
@@ -35,9 +38,29 @@ export class ComplexComponent implements OnInit {
 
   loading$ = this._monitorsService.loading$;
 
-  constructor(private _monitorsService: MonitorsService) { }
+  constructor(private _monitorsService: MonitorsService,
+              private _metricsService: WriteMetricsService) { }
 
   ngOnInit() {
+  }
+
+  createMetric(event: CreateMetric) {
+    this._metricsService.post(event.monitor, event.resource, {
+      name: event.name,
+      interval: event.interval,
+      period: event.period,
+      sourceMetric: event.metric,
+      type: 'COMPLEX',
+      userId: ''
+    }).then(() => {
+      this._monitorsService.fetch();
+    });
+  }
+
+  deleteMetric(event: DeleteMetric) {
+    this._metricsService.delete(event.monitor, event.resource, event.metric).then(() => {
+      this._monitorsService.fetch();
+    });
   }
 
 }
