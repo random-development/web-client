@@ -9,15 +9,11 @@ import { MetricsService } from './metric/metric-values/metrics.service';
 })
 export class MainpageComponent implements OnInit {
 
-  constructor(private monitorsService: MonitorsService,
-              private metricService: MetricsService) {
+  constructor(private monitorsService: MonitorsService) {
   }
 
   ngOnInit() {
     this.monitorsService.fetch();
-    this.metricService.fetch({
-      numberOfMeasures: 100
-    });
   }
 
 }

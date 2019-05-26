@@ -6,6 +6,7 @@ import { Route, RouterModule } from '@angular/router';
 import { ComplexModule } from './complex/complex.module';
 import { MetricComponent } from './metric/metric.component';
 import { ComplexComponent } from './complex/complex.component';
+import { MonitorsService } from './monitors/monitors.service';
 
 const routes: Route[] = [
   {
@@ -28,6 +29,9 @@ const routes: Route[] = [
 @NgModule({
   declarations: [
     MainpageComponent
+  ],
+  providers: [
+    MonitorsService
   ],
   imports: [
     CommonModule,

@@ -23,24 +23,8 @@ export class MonitorsService {
     this._loading$.next(true);
     this._http.get<Monitor[]>(url, HTTP_HEADERS).subscribe(data => {
       this._state$.next(
-        [...data,
-        {// add mock
-          name: 'Mock',
-          resources: [
-            {
-              name: 'rmock',
-              metrics: [{ name: 'testm', type: 'COMPLEX', period: 1, interval: 1 }]
-            }]
-        },
-        {// add mock
-          name: 'Mock2',
-          resources: [
-            {
-              name: 'rmock2',
-              metrics: [{ name: 'testm2', type: 'NORMAL', period: 2, interval: 2 }]
-            }]
-        }
-      ]);
+        [...data]
+      );
       this._loading$.next(false);
     });
   }

@@ -6,9 +6,10 @@ import { FiltersChange } from './filters/filters-change';
 @Component({
   selector: 'app-metric',
   templateUrl: './metric.component.html',
-  styleUrls: ['./metric.component.scss']
+  styleUrls: ['./metric.component.scss'],
+  providers: [MetricsService]
 })
-export class MetricComponent {
+export class MetricComponent implements OnInit {
 
   constructor(public monitorsService: MonitorsService,
     public metricService: MetricsService) { }
@@ -30,6 +31,12 @@ export class MetricComponent {
       measureTypes: filters.measureTypes,
       numberOfMeasures: filters.numberOfMeasures,
       resourcesPaths: resourcesPaths
+    });
+  }
+
+  ngOnInit(): void {
+    this.metricService.fetch({
+      numberOfMeasures: 100
     });
   }
 }
