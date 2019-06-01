@@ -32,18 +32,17 @@ export class ResultsTableComponent {
   public metricsForChart = [];
 
   checkboxChanged(metric) {
-    if (metric.isChecked == true) {
+    if (metric.isChecked === true) {
       metric.isChecked = false;
       console.log(metric.isChecked);
-    }
-    else {
+    } else {
       metric.isChecked = true;
       console.log(metric.isChecked);
     }
   }
 
   open(content, metrics) {
-    this.metricsForChart = metrics.filter(m => m.isChecked == true);
+    this.metricsForChart = metrics.filter(m => m.isChecked === true);
     this.barChartLabels = [];
     this.barChartData = [];
     this.timestampsConverted = [];
