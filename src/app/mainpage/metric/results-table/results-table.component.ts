@@ -30,15 +30,28 @@ export class ResultsTableComponent {
   public barChartData = [];
   public timestampsConverted = [];
   public metricsForChart = [];
+  public metricTableData = [];
 
   checkboxChanged(metric) {
     if (metric.isChecked === true) {
       metric.isChecked = false;
-      console.log(metric.isChecked);
     } else {
       metric.isChecked = true;
-      console.log(metric.isChecked);
     }
+  }
+
+  rowSelected(content, metric) {
+    this.metricTableData = [];
+    for (var i = 0; i<metric.valueData.length && i<metric.timeData.length; i++) {
+      this.metricTableData.push(
+        {id: i+1, time: metric.timeData[i], value: metric.valueData[i]}
+      )
+    }
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed`;
+    });
   }
 
   open(content, metrics) {

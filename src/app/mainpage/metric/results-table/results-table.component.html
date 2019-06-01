@@ -1,6 +1,6 @@
 <ng-template #content let-modal >
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Graphs</h4>
+    <h4 class="modal-title" id="modal-basic-title">Graph</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -23,11 +23,41 @@
   </div>
 </ng-template>
 
+<ng-template #metricValuesContent let-modal >
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Metric details</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Time</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let row of metricTableData">
+            <td>{{ row.id }}</td>
+            <td>{{ row.time * 1000 | date:'yyyy-MM-dd HH:mm:ss Z' }}</td>
+            <td>{{ row.value }}</td>
+          </tr>
+      </tbody>
+    </table>  
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Close')">Close</button>
+  </div>
+</ng-template>
+
 <div align="right">
   <button class="btn btn-primary" (click)="open(content, metrics)" type="button">Show on graph</button>
   <p></p>
 </div>
-<table class="table">
+<table class="table table-hover">
   <thead>
     <tr>
       <th>Host name</th>
@@ -40,11 +70,11 @@
   </thead>
   <tbody>
       <tr *ngFor="let metric of metrics">
-        <td>{{ metric.resourceName }}</td>
-        <td>{{ metric.name }}</td>
-        <td>{{ metric.type }}</td>
-        <td>{{ metric.lastValue }}</td>
-        <td>{{ metric.time * 1000 | date:'yyyy-MM-dd HH:mm:ss Z' }}</td>
+        <td (click)="rowSelected(metricValuesContent, metric)">{{ metric.resourceName }}</td>
+        <td (click)="rowSelected(metricValuesContent, metric)">{{ metric.name }}</td>
+        <td (click)="rowSelected(metricValuesContent, metric)">{{ metric.type }}</td>
+        <td (click)="rowSelected(metricValuesContent, metric)">{{ metric.lastValue }}</td>
+        <td (click)="rowSelected(metricValuesContent, metric)">{{ metric.time * 1000 | date:'yyyy-MM-dd HH:mm:ss Z' }}</td>
         <td>
           <input type="checkbox" (change)="checkboxChanged(metric)">
         </td>
