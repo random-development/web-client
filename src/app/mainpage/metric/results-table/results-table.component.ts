@@ -42,10 +42,12 @@ export class ResultsTableComponent {
 
   rowSelected(content, metric) {
     this.metricTableData = [];
-    for (var i = 0; i<metric.valueData.length && i<metric.timeData.length; i++) {
-      this.metricTableData.push(
-        {id: i+1, time: metric.timeData[i], value: metric.valueData[i]}
-      )
+    for (const i in metric.timeData) {
+      if (true) {
+        this.metricTableData.push(
+          {id: i, time: metric.timeData[i], value: metric.valueData[i]}
+        );
+      }
     }
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
