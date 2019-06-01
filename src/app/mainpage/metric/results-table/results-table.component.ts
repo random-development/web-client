@@ -11,7 +11,7 @@ import { filter } from 'rxjs/operators';
 })
 export class ResultsTableComponent {
   closeResult: string;
-  modalContent: undefined;
+  modalContent: any[];
   public chartType = 'line';
   @Input()
   metrics: MetricValues[];
@@ -29,14 +29,27 @@ export class ResultsTableComponent {
   public barChartLegend = true;
   public barChartData = [];
   public timestampsConverted = [];
+  public metricsForChart = [];
+
+  checkboxChanged(metric) {
+    if (metric.isChecked == true) {
+      metric.isChecked = false;
+      console.log(metric.isChecked);
+    }
+    else {
+      metric.isChecked = true;
+      console.log(metric.isChecked);
+    }
+  }
 
   open(content, metrics) {
+    this.metricsForChart = metrics.filter(m => m.isChecked == true);
     this.barChartLabels = [];
     this.barChartData = [];
     this.timestampsConverted = [];
-    this.modalContent = metrics;
-    if (metrics.length > 0) {
-      metrics[0].timeData.forEach(element => {
+    this.modalContent = this.metricsForChart;
+    if (this.metricsForChart.length > 0) {
+      this.metricsForChart[0].timeData.forEach(element => {
         this.timestampsConverted.push(new Date(element * 1000).toLocaleTimeString(
           [],
           {
@@ -50,16 +63,17 @@ export class ResultsTableComponent {
         ));
       });
       this.barChartLabels = this.timestampsConverted;
+
+      this.metricsForChart.forEach(metric => {
+        this.barChartData.push(
+          {data: metric.valueData, label: (metric.resourceName + ':' + metric.name), fill: 'false'}
+        );
+      });
+      this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        this.closeResult = `Dismissed`;
+      });
     }
-    metrics.forEach(metric => {
-      this.barChartData.push(
-        {data: metric.valueData, label: metric.name, fill: 'false'}
-      );
-    });
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed`;
-    });
   }
 }
