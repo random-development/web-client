@@ -6,4 +6,5 @@ export interface MetricValues {
     time: number;
     timeData: number[];
     valueData: number[];
+    isChecked: true;
 }
