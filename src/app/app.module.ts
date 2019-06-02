@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MainpageModule } from './mainpage/mainpage.module';
 import { LoginModule } from './login/login.module';
+import { UserService } from './user/user.service';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { LoginModule } from './login/login.module';
     MainpageModule,
     LoginModule
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  providers: [UserService]
 })
 export class AppModule { }

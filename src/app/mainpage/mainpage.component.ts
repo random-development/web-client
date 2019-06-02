@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MonitorsService } from './monitors/monitors.service';
 import { MetricsService } from './metric/metric-values/metrics.service';
+import { UserService } from '../user/user.service';
 
 @Component({
   selector: 'app-mainpage',
@@ -9,7 +10,7 @@ import { MetricsService } from './metric/metric-values/metrics.service';
 })
 export class MainpageComponent implements OnInit {
 
-  constructor(private monitorsService: MonitorsService) {
+  constructor(private monitorsService: MonitorsService, private userService: UserService) {
   }
 
   ngOnInit() {
