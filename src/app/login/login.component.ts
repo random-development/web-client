@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { UserService } from '../user/user.service';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  constructor(private route: ActivatedRoute, private userService: UserService) { }
 
   ngOnInit() {
+    this.userService.login(this.route.snapshot.queryParams.code);
   }
-
 }

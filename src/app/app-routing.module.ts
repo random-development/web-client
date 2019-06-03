@@ -7,11 +7,11 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: './mainpage/mainpage.module#MainpageModule',
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',
-    component: LoginComponent,
-    canActivate: [AuthGuard]
+    component: LoginComponent
   }
 ];
 
