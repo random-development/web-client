@@ -7,9 +7,9 @@ import { Router } from '@angular/router';
 @Injectable()
 export class UserService {
   private urlPrefix = 'http://';
-  // private credentials = 'first-client:noonewilleverguess';
-  private urlCredentials = 'first-client:noonewilleverguess@';
+  private credentials = 'first-client:noonewilleverguess';
   private urlBase = 'localhost:7000/oauth/';
+  // private urlBase = 'hibron.usermd.net:7000/oauth/';
   private tokenActive = false;
 
   public token: string;
@@ -27,12 +27,13 @@ export class UserService {
       return;
     }
 
-    // const authUrl = this.urlPrefix + this.urlBase + 'token';
-    const authUrl = this.urlPrefix + this.urlCredentials + this.urlBase + 'token';
+    const authUrl = this.urlPrefix + this.urlBase + 'token';
     this.http.post(authUrl, {}, {
       params: { code, grant_type: 'authorization_code' },
-      // headers: { 'Authorization': 'Basic ' + btoa(this.credentials) },
-      withCredentials: true
+      headers: {
+        'Content-type': 'application/x-www-form-urlencoded; charset=utf-8',
+        'Authorization': 'Basic ' + btoa(this.credentials) 
+      }
     }).subscribe((accessData: AccessData) => {
       if (!accessData) {
         return;
