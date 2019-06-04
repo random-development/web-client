@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { MetricValues } from '../metric-values/metric-values';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { filter } from 'rxjs/operators';
+import {ExcelService} from '../excel-export/excel.service';
 
 @Component({
   selector: 'app-results-table',
@@ -16,7 +17,7 @@ export class ResultsTableComponent {
   @Input()
   metrics: MetricValues[];
 
-  constructor(private modalService: NgbModal) {
+  constructor(private modalService: NgbModal, private excelService:ExcelService) {
   }
 
   public barChartOptions = {
@@ -89,5 +90,9 @@ export class ResultsTableComponent {
         this.closeResult = `Dismissed`;
       });
     }
+  }
+
+  exportAsXLSX():void {
+    this.excelService.exportAsExcelFile(this.metrics, 'sample');
   }
 }
