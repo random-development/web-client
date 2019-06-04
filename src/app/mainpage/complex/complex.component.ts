@@ -6,6 +6,7 @@ import { MetricExtended } from './metric-extended';
 import { CreateMetric } from './manage/create-metric';
 import { WriteMetricsService } from './write-metrics/write-metrics.service';
 import { DeleteMetric } from './list/delete-metric';
+import { UserService } from 'src/app/user/user.service';
 
 @Component({
   selector: 'app-complex',
@@ -39,7 +40,8 @@ export class ComplexComponent implements OnInit {
   loading$ = this._monitorsService.loading$;
 
   constructor(private _monitorsService: MonitorsService,
-              private _metricsService: WriteMetricsService) { }
+              private _metricsService: WriteMetricsService,
+              private _userService: UserService) { }
 
   ngOnInit() {
   }
@@ -51,7 +53,7 @@ export class ComplexComponent implements OnInit {
       period: event.period,
       sourceMetric: event.metric,
       type: 'COMPLEX',
-      userId: ''
+      userId: this._userService.clientId
     }).then(() => {
       this._monitorsService.fetch();
     });
