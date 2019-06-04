@@ -93,6 +93,14 @@ export class ResultsTableComponent {
   }
 
   exportAsXLSX():void {
-    this.excelService.exportAsExcelFile(this.metrics, 'metrics');
+    this.excelService.exportAsExcelFile(this.metrics.map(function(x){
+      return {
+        HostName: x.resourceName,
+        MonitorName: x.name,
+        MeasureType: x.type,
+        Value: x.lastValue,
+        Time: x.time
+      };
+    }), 'metrics');
   }
 }
