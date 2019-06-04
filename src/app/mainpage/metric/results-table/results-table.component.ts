@@ -93,6 +93,6 @@ export class ResultsTableComponent {
   }
 
   exportAsXLSX():void {
-    this.excelService.exportAsExcelFile(this.metrics, 'sample');
+    this.excelService.exportAsExcelFile(this.metrics, 'metrics');
   }
 }
