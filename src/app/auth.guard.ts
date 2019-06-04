@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { UserService } from './user/user.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  private authUrl = 'http://localhost:7000/oauth/authorize?grant_type=authorization_code&response_type=code&client_id=first-client&state=1234';
-  // private authUrl = 'http://hibron.usermd.net:7000/oauth/authorize?grant_type=authorization_code&response_type=code&client_id=first-client&state=1234';
+  private readonly oauthParams = '/oauth/authorize?grant_type=authorization_code&response_type=code&client_id=first-client&state=1234';
+  private readonly authUrl = `${environment.authUrl}${this.oauthParams}`;
 
   constructor(private userService: UserService) {
   }
@@ -15,7 +16,7 @@ export class AuthGuard implements CanActivate {
   canActivate() {
     if (this.userService.hasAccess) {
       return true;
-    };
+    }
     window.location.href = this.authUrl;
     return false;
   }

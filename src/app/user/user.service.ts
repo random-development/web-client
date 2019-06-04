@@ -3,13 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { AccessData } from './access-data';
 import { CheckTokenData } from './check-token-data';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class UserService {
-  private urlPrefix = 'http://';
   private credentials = 'first-client:noonewilleverguess';
-  private urlBase = 'localhost:7000/oauth/';
-  // private urlBase = 'hibron.usermd.net:7000/oauth/';
+  private urlBase = environment.authUrl;
   private tokenActive = false;
 
   public token: string;
@@ -27,7 +26,7 @@ export class UserService {
       return;
     }
 
-    const authUrl = this.urlPrefix + this.urlBase + 'token';
+    const authUrl = this.urlBase + '/oauth/token';
     this.http.post(authUrl, {}, {
       params: { code, grant_type: 'authorization_code' },
       headers: {
@@ -46,7 +45,7 @@ export class UserService {
       this.tokenActive = true;
       this.token = accessData.access_token;
 
-      const tokenDataUrl = this.urlPrefix + this.urlBase + 'check_token';
+      const tokenDataUrl = this.urlBase + '/oauth/check_token';
       this.http.post(tokenDataUrl, {}, { params: { token: this.token } }).subscribe((tokenData: CheckTokenData) => {
         if (!tokenData) {
           return;
