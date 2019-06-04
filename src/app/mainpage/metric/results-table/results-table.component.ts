@@ -12,6 +12,7 @@ import { filter } from 'rxjs/operators';
 export class ResultsTableComponent {
   closeResult: string;
   modalContent: any[];
+  filterMetrics: string;
   public chartType = 'line';
   @Input()
   metrics: MetricValues[];
@@ -49,7 +50,7 @@ export class ResultsTableComponent {
         );
       }
     }
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size: 'lg'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed`;
@@ -83,7 +84,7 @@ export class ResultsTableComponent {
           {data: metric.valueData, label: (metric.resourceName + ':' + metric.name), fill: 'false'}
         );
       });
-      this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', windowClass: 'modalWindow'}).result.then((result) => {
         this.closeResult = `Closed with: ${result}`;
       }, (reason) => {
         this.closeResult = `Dismissed`;
