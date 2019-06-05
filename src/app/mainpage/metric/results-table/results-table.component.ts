@@ -4,6 +4,7 @@ import { MetricValues } from '../metric-values/metric-values';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { filter } from 'rxjs/operators';
 import {ExcelService} from '../excel-export/excel.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-results-table',
@@ -18,13 +19,18 @@ export class ResultsTableComponent {
   @Input()
   metrics: MetricValues[];
 
-  constructor(private modalService: NgbModal, private excelService:ExcelService) {
+  constructor(private modalService: NgbModal, private excelService: ExcelService) {
   }
 
   public barChartOptions = {
     scaleShowVerticalLines: false,
     responsive: true,
-    fill: false
+    fill: false,
+    scales: {
+      xAxes: [{
+        type: 'time'
+      }]
+    }
   };
   public barChartLabels = [];
   public barChartType = 'line';
@@ -33,6 +39,8 @@ export class ResultsTableComponent {
   public timestampsConverted = [];
   public metricsForChart = [];
   public metricTableData = [];
+  public dataset = [];
+  public metricDataset = [];
 
   checkboxChanged(metric) {
     if (metric.isChecked === true) {
@@ -78,11 +86,25 @@ export class ResultsTableComponent {
           }
         ));
       });
-      this.barChartLabels = this.timestampsConverted;
+      // this.barChartLabels = this.timestampsConverted;
 
       this.metricsForChart.forEach(metric => {
+        this.metricDataset = [];
+        for (const i in metric.timeData) {
+          if (true) {
+            this.metricDataset.push(
+              { x: moment.unix(metric.timeData[i]).format("YYYY-MM-DD HH:mm:ss"), y: metric.valueData[i] }
+            );
+          }
+        }
+        console.log(this.metricDataset);
         this.barChartData.push(
-          {data: metric.valueData, label: (metric.resourceName + ':' + metric.name), fill: 'false'}
+          {
+            data: this.metricDataset,
+            label: (metric.resourceName + ':' + metric.name),
+            fill: 'false',
+            lineTension: 0.3
+          }
         );
       });
       this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', windowClass: 'modalWindow'}).result.then((result) => {
@@ -93,7 +115,7 @@ export class ResultsTableComponent {
     }
   }
 
-  exportAsXLSX():void {
+  exportAsXLSX(): void {
     this.excelService.exportAsExcelFile(this.metrics.map(function(x){
       return {
         HostName: x.resourceName,
