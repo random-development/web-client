@@ -36,7 +36,6 @@ export class ResultsTableComponent {
   public barChartType = 'line';
   public barChartLegend = true;
   public barChartData = [];
-  public timestampsConverted = [];
   public metricsForChart = [];
   public metricTableData = [];
   public dataset = [];
@@ -70,24 +69,8 @@ export class ResultsTableComponent {
     this.metricsForChart = metrics.filter(m => m.isChecked === true);
     this.barChartLabels = [];
     this.barChartData = [];
-    this.timestampsConverted = [];
     this.modalContent = this.metricsForChart;
     if (this.metricsForChart.length > 0) {
-      this.metricsForChart[0].timeData.forEach(element => {
-        this.timestampsConverted.push(new Date(element * 1000).toLocaleTimeString(
-          [],
-          {
-            year: '2-digit',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit'
-          }
-        ));
-      });
-      // this.barChartLabels = this.timestampsConverted;
-
       this.metricsForChart.forEach(metric => {
         this.metricDataset = [];
         for (const i in metric.timeData) {
