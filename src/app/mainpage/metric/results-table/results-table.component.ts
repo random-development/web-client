@@ -82,7 +82,7 @@ export class ResultsTableComponent {
 
       this.metricsForChart.forEach(metric => {
         this.barChartData.push(
-          {data: metric.valueData, label: (metric.resourceName + ':' + metric.name), fill: 'false'}
+          {data: metric.valueData, label: (metric.name + ':' + metric.resourceName + ':' + metric.type), fill: 'false'}
         );
       });
       this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', windowClass: 'modalWindow'}).result.then((result) => {
