@@ -101,7 +101,7 @@ export class ResultsTableComponent {
         this.barChartData.push(
           {
             data: this.metricDataset,
-            label: (metric.resourceName + ':' + metric.name),
+            label: (metric.name + ':' + metric.resourceName + ':' + metric.type),
             fill: 'false',
             lineTension: 0.3
           }
