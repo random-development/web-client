@@ -4,6 +4,7 @@ import { MetricComponent } from './metric.component';
 import { FiltersModule } from './filters/filters.module';
 import { ResultsTableModule } from './results-table/results-table.module';
 import { RouterModule } from '@angular/router';
+import { MetricRefreshService } from './metric-refresh.service';
 
 @NgModule({
   declarations: [MetricComponent],
@@ -15,6 +16,7 @@ import { RouterModule } from '@angular/router';
   ],
   exports: [
     MetricComponent
-  ]
+  ],
+  providers: [MetricRefreshService]
 })
 export class MetricModule { }

@@ -7,6 +7,7 @@ import { Resource } from '../../monitors/resource';
 import { Metric } from '../../monitors/metric';
 import { FiltersChange } from './filters-change';
 import { ResourceExtended } from './resource-extended';
+import { MetricRefreshService } from '../metric-refresh.service';
 
 @Component({
   selector: 'app-filters',
@@ -46,7 +47,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
     return this.formFilters.get('autorefresh');
   }
 
-  constructor(private _fb: FormBuilder) {}
+  constructor(private _fb: FormBuilder, private metricRefreshService: MetricRefreshService) {}
 
   ngOnInit() {
     const monitorsSelect = this.formFilters.get('monitors');
@@ -120,6 +121,8 @@ export class FiltersComponent implements OnInit, OnDestroy {
       numberOfMeasures: this.formFilters.get('numberOfMeasures').value,
       resources: this.formFilters.get('resources').value
     });
+
+    this.metricRefreshService.refresh();
   }
 
   private convertDate(date: any): Date {
