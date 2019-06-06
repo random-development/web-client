@@ -17,7 +17,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
   private _destroyed$ = new Subject();
   private _selectedMonitors$ = new BehaviorSubject<string[]>([]);
   private _selectedResources$ = new BehaviorSubject<ResourceExtended[]>([]);
-  private _autorefreshInterval: Observable<number> = interval(5000).pipe(
+  private _autorefreshInterval: Observable<number> = interval(20000).pipe(
     takeUntil(this._destroyed$)
   );
   private _intervalSubscription: Subscription;
